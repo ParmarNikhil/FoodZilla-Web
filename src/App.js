@@ -33,7 +33,7 @@ class App extends Component {
       var url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "&is_veg=" + this.state.isVeg + "" ;
     }
     else if(this.state.selectedtaste!=="") {
-      var url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "&is_veg=" + this.state.isVeg + "&taste=" + this.state.selectedtaste + "" ;
+       url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "&is_veg=" + this.state.isVeg + "&taste=" + this.state.selectedtaste + "" ;
     }
     else{
       url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "";
