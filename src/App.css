@@ -10,6 +10,7 @@ img{
   display: flex;
   justify-content: center;
   padding: 5px 5px 5px 5px;
+  margin: auto;
 }
 
 .npbtns{
@@ -35,15 +36,19 @@ img{
   justify-content: center;
   /* margin:auto; */
   display: grid;
+  width: auto;
+  height: auto;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 20px;
   align-items: stretch;
 }
 
 .cards{
+  justify-content: center;
   font-size:30px;
   background: #00000080;
   height: auto; 
+  width: auto;
   padding: 15px 15px 15px 15px;
 }
 
