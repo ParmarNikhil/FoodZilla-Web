@@ -8,6 +8,7 @@ class App extends Component {
     show:false,
     recipe:[],
     lastid:0,
+    prevlastid: [],
     isVeg:"",
     taste:["Sour","Sweet","Tangy","Mild","Spicy"],
     selectedtaste:"",
@@ -25,10 +26,10 @@ class App extends Component {
   }
 
   changelastid = (event) => {
-    
-    console.log(document.getElementById("tastebox").value);
     event.preventDefault();
-    this.setState({lastid:this.state.recipe[this.state.recipe.length-1].id+10},()=>{
+    this.setState({lastid:this.state.recipe[this.state.recipe.length-1].id+0,
+    prevlastid:[this.state.recipe[0].id-1,...this.state.prevlastid]},()=>{
+    console.log(this.state.lastid);
     if(this.state.isVeg!==""){
       var url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "&is_veg=" + this.state.isVeg + "" ;
     }
@@ -42,14 +43,16 @@ class App extends Component {
     else{
       url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "";
     }
-
+    console.log("lastid",this.state.lastid);
+    console.log("previouslastid",this.state.prevlastid[0]);
     fetch( url )
       .then(response=>response.json())
         .then(data=>this.setState
       ({recipe:data,show:true})
       )
     });
-    console.log(this.state.lastid);
+    
+    
         
   }
 
@@ -65,7 +68,8 @@ class App extends Component {
       ({recipe:data,show:true})
       )
     });
-    console.log(this.state.lastid);
+    console.log("lastid",this.state.lastid);
+    console.log("previouslastid",this.state.prevlastid);
   }
   
   nonvegFilter = (event) => {  
@@ -97,25 +101,40 @@ class App extends Component {
   }
 
   changelastidBackwards = (event) => {
-    console.log(this.state.isVeg);
-    event.preventDefault();
-    this.setState({lastid:this.state.recipe[this.state.recipe.length-1].id-10},()=>{
-      if(this.state.isVeg!==""){
-        var url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "&is_veg=" + this.state.isVeg + "" ;
-      }
-      else{
-        url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "";
+    event.preventDefault(); 
+      if(this.state.prevlastid[0]>=0)
+      {
+        this.setState({lastid:this.state.prevlastid[0]},()=>{
+          console.log(this.state.lastid);
+          if(this.state.isVeg!==""){
+            var url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "&is_veg=" + this.state.isVeg + "" ;
+          }
+          else if(this.state.selectedtaste!=="") {
+             url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "&taste=" + this.state.selectedtaste + "" ;
+          }
+          else if (this.state.isVeg!=="" & this.state.selectedtaste!==""){
+            url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "&is_veg=" + this.state.isVeg + "&taste=" + this.state.selectedtaste + "" ;
+      
+          }
+          else{
+            url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "";
+          }
+          const cpdata = this.state.prevlastid;
+          cpdata.shift();
+          this.setState({prevlastid:cpdata})
+          fetch( url )
+            .then(response=>response.json())
+              .then(data=>this.setState({recipe:data,show:true}))
+          }
+          
+          );
       }
       
-      fetch( url )
-        .then(response=>response.json())
-          .then(data=>this.setState
-        ({recipe:data,show:true})
-        )
-      });
-      console.log(this.state.lastid);
     }
-
+    
+      
+  
+  
   render(){ 
     return (
       <div className="App">
