@@ -19,10 +19,7 @@ class App extends Component {
     var url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "";
     const response = await fetch(url);
     const data = await response.json();
-    
-    this.setState({recipe:data,show:true},()=>{console.log(this.state.recipe)})
-    console.log(this.state.recipe)
-    // console.log(data.results[0]);
+    this.setState({recipe:data,show:true})
   }
 
   changelastid = (event) => {
@@ -30,6 +27,7 @@ class App extends Component {
     this.setState({lastid:this.state.recipe[this.state.recipe.length-1].id+0,
     prevlastid:[this.state.recipe[0].id-1,...this.state.prevlastid]},()=>{
     console.log(this.state.lastid);
+
     if(this.state.isVeg!==""){
       var url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "&is_veg=" + this.state.isVeg + "" ;
     }
@@ -43,21 +41,21 @@ class App extends Component {
     else{
       url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "";
     }
-    console.log("lastid",this.state.lastid);
-    console.log("previouslastid",this.state.prevlastid[0]);
+
     fetch( url )
       .then(response=>response.json())
         .then(data=>this.setState
       ({recipe:data,show:true})
       )
     });
-    
-    
+
         
   }
 
   vegFilter = (event) => {  
     event.preventDefault();
+    document.getElementById("veg").classList.add("vegbtn");
+    document.getElementById("nonveg").classList.remove("nonvegbtn");
     this.setState({isVeg:"true"});
     this.setState({lastid:this.state.recipe[this.state.recipe.length-1].id+10},()=>{
     var url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "&is_veg=" + this.state.isVeg + "" ;
@@ -68,13 +66,14 @@ class App extends Component {
       ({recipe:data,show:true})
       )
     });
-    console.log("lastid",this.state.lastid);
-    console.log("previouslastid",this.state.prevlastid);
+
   }
   
   nonvegFilter = (event) => {  
     event.preventDefault();
     this.setState({isVeg:"false"});
+    document.getElementById("nonveg").classList.add("nonvegbtn");
+    document.getElementById("veg").classList.remove("vegbtn");
     this.setState({lastid:this.state.recipe[this.state.recipe.length-1].id+10},()=>{
     var url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "&is_veg=" + this.state.isVeg + "" ;
     
@@ -92,6 +91,25 @@ class App extends Component {
     this.setState({selectedtaste:document.getElementById("tastebox").value},()=>{
       var url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "&taste=" + this.state.selectedtaste + "" ;
     
+      fetch( url )
+        .then(response=>response.json())
+          .then(data=>this.setState
+        ({recipe:data,show:true})
+        )
+      });
+  }
+
+  changelastidBackwards = (event) => {
+    console.log(this.state.isVeg);
+    event.preventDefault();
+    this.setState({lastid:this.state.recipe[this.state.recipe.length-1].id-10},()=>{
+      if(this.state.isVeg!==""){
+        var url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "&is_veg=" + this.state.isVeg + "" ;
+      }
+      else{
+        url = "https://foodzilla.vercel.app/recipes?last_id="+ this.state.lastid + "";
+      }
+      
       fetch( url )
         .then(response=>response.json())
           .then(data=>this.setState
@@ -146,8 +164,8 @@ class App extends Component {
 
 <h1>FoodZilla</h1>
         <div className="filterbtns">        
-          <button className="btns" onClick={this.vegFilter}>veg</button>
-          <button className="btns" onClick={this.nonvegFilter}>nonveg</button>
+          <button className="btns" id="veg" onClick={this.vegFilter}>veg</button>
+          <button className="btns" id="nonveg" onClick={this.nonvegFilter}>nonveg</button>
           <select id="tastebox" onChange={this.tasteFilter}>  
           {this.state.taste.map((t)=>(
             <option key={t} value={t}>{t}</option>

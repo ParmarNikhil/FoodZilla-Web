@@ -5,6 +5,7 @@ img{
   height:auto;
   width:auto;
   max-width: 100%;
+  max-height: 100%;
   margin: auto;
 }
 
@@ -29,6 +30,24 @@ img{
   padding: 5px 10px 5px 10px;
 }
 
+.vegbtn{
+  background-color: green;
+  height: auto;
+  width: auto;
+  margin-left: 3px;
+  margin-right: 3px;
+  padding: 5px 10px 5px 10px;
+}
+
+
+.nonvegbtn{
+  background-color: red;
+  height: auto;
+  width: auto;
+  margin-left: 3px;
+  margin-right: 3px;
+  padding: 5px 10px 5px 10px;
+}
 
 
 .cardholder{
