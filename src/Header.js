@@ -1,6 +1,6 @@
 import './App.css';
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 
 //class data
@@ -10,7 +10,7 @@ class Header extends Component {
        
         return (
             <div className="Topnav">                                        
-                    <header><a href="https://parmarnikhil.github.io/FoodZilla-Web">Home</a><center><p>FoodZilla</p></center></header>
+                    <header><a href="https://parmarnikhil.github.io/FoodZilla-Web">Home</a><Link to="/Favourites">Favourites</Link><p>FoodZilla</p></header>
             </div>
         );
     }

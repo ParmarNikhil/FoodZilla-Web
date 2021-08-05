@@ -1,6 +1,6 @@
 import './App.css';
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 
 //class data
@@ -11,6 +11,7 @@ class RecipeDesc extends Component {
         step:"step",
         ingredients:[]
     }
+
     async componentDidMount() {
         var id = this.props.match.params.id;
         var url = "https://foodzilla-salmannotkhan.vercel.app/recipe/" + id;
@@ -18,6 +19,19 @@ class RecipeDesc extends Component {
         const data = await response.json();
         this.setState({ data: data, steps: data.steps , ingredients: data.ingredients})
     }
+
+    addToFavourite = () => {
+        if(localStorage.getItem("fav") == null){
+            localStorage.setItem("fav","[]");
+        }
+
+        var old = JSON.parse(localStorage.getItem("fav"));
+        old.push(this.state.data);
+        localStorage.setItem("fav",JSON.stringify(old));       
+        console.log(localStorage.getItem("fav"))
+        
+    }
+
     render() {
         let d = this.state;
         
@@ -25,9 +39,8 @@ class RecipeDesc extends Component {
             <div className="App">
 
                 <div className="descbox">
-                    <div className="descitem">
-                        
-                        <img src={d.data.image} className="descimage" alt="something is wrong" />
+                    <div className="descitem">   
+                        <img src={d.data.image} className="descimage" alt="something is wrong" /><button onClick={this.addToFavourite}>add to favourite</button>
                         <h2>{d.data.name}</h2>
                         <p>Course - {d.data.course}</p>
                         <p>Cuisine - {d.data.cuisine}</p>  

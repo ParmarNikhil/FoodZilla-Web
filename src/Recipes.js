@@ -180,9 +180,6 @@ class Recipes extends Component {
 
     }
 
-
-
-
     render() {
         return (
             <div className="FilterBox">
@@ -218,9 +215,12 @@ class Recipes extends Component {
 
                                         </Link>
                                         <br></br>
+                                        <div className="recipetype" style={{ fontSize: 20 }}>{r.is_veg ? <div className="indiborder"><div className="vegindicator"></div></div> : 
+                                        <div className="nonindiborder"><div className="nonvegindicator"></div></div>}</div>
+                                        
                                         <div className="recipename" style={{ fontSize: 20 }}>{r.name}</div>
-                                        <div className="recipetype" style={{ fontSize: 20 }}>{r.is_veg ? "veg" : "nonveg"}</div>
-
+                                        
+                                        
                      
                                     </div>
                                 

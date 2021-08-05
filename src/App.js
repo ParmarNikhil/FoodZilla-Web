@@ -3,6 +3,7 @@ import Header from './Header.js';
 import React, { Component } from 'react';
 import Recipes from './Recipes.js';
 import RecipeDesc from './RecipeDesc.js';
+import Favourites from './Favourites';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 //class data
 class App extends Component {
@@ -19,10 +20,17 @@ class App extends Component {
                   <RecipeDesc/>
               </Route>
 
+              
+              <Route path="/Favourites">
+                <Header/>
+                <Favourites/>
+              </Route>
+
               <Route path="/">
                   <Header/>
                   <Recipes/>
               </Route>
+
           </Switch>
           
         </Router>

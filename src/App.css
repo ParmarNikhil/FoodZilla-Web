@@ -35,11 +35,6 @@
   background-color: white;
 }
 
-/* header{
-  background-color: whitesmoke;
-  height: 30px;
-  
-} */
 
 img{
   height:auto;
@@ -78,25 +73,27 @@ img{
   margin-right: 3px;
   padding: 5px 10px 5px 10px;
 }
+.rdetails{
+  display: flex;
+  flex-direction: column;
+}
 
 .descbox{
   display: flex;  
   flex-direction: row;
   padding: 20px 100px 20px 100px;
   justify-content: space-between;
+
 }
 
 .descimage{
-  width: 400px;
-  height: 300px;
+  width: 500px;
+  height: 400px;
 }
-
-
 
 .descitem{
   width: 50%;
   text-align: left;
-  /* justify-content:space-between; */
   align-items: flex-start;
 }
 
@@ -104,6 +101,42 @@ img{
   text-align: left;
   margin-left: 5%;
   width: 70%;
+}
+
+.nonvegindicator{
+  background-color: red;
+  border: black;
+  width: 15px;
+  height: 15px;
+  border-radius: 1000px;
+}
+
+.nonindiborder{
+  float: right;
+  padding: 3px;
+  border: red;
+  border-style: solid;
+  
+  width:max-content;
+}
+
+
+
+.vegindicator{
+  background-color: green;
+  border: black;
+  width: 15px;
+  height: 15px;
+  border-radius: 1000px;
+}
+
+.indiborder{
+  padding: 3px;
+  border: green;
+  float: right;
+  margin-top: auto;
+  border-style: solid;
+  width:max-content;
 }
 
 .sdescitem{
