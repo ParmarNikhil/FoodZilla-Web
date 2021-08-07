@@ -7,6 +7,7 @@ class Recipes extends Component {
     state = {
         show: false,
         recipe: [],
+        r:true,
         lastid: 0,
         prevlastid: [],
         isVeg: "",
@@ -36,6 +37,9 @@ class Recipes extends Component {
             }
             else if (this.state.selectedtaste !== "") {
                 url = "https://foodzilla.vercel.app/recipes?last_id=" + this.state.lastid + "&taste=" + this.state.selectedtaste + "";
+            }
+            else if(this.state.keyword !== ""){
+                url = "https://foodzilla.vercel.app/recipes?last_id=" + this.state.lastid  + "&query=" + this.state.keyword;
             }
             else if (this.state.isVeg !== "" & this.state.selectedtaste !== "") {
                 url = "https://foodzilla.vercel.app/recipes?last_id=" + this.state.lastid + "&is_veg=" + this.state.isVeg + "&taste=" + this.state.selectedtaste + "";
@@ -82,17 +86,16 @@ class Recipes extends Component {
 
         fetch(url)
             .then(response => response.json())
-            .then(data => {
-                if (data === null) {
-                    console.log("data not found");
-                } else {
-                    this.setState
-                        ({ recipe: data, show: true })
-                }
-            }
-            )
-        // console.log(data)
-
+            .then(data => {this.setState
+                        ({ recipe: data, show: true },()=>{ if(this.state.recipe.length===0){
+                            this.setState({r:false})
+                            
+                        }else{
+                            this.setState({r:true})
+                            
+                        }
+                     })
+                    })
     }
 
     nonvegFilter = (event) => {
@@ -131,24 +134,7 @@ class Recipes extends Component {
         });
     }
 
-    changelastidBackwards = (event) => {
-        console.log(this.state.isVeg);
-        event.preventDefault();
-        this.setState({ lastid: this.state.recipe[this.state.recipe.length - 1].id - 10 }, () => {
-            if (this.state.isVeg !== "") {
-                var url = "https://foodzilla.vercel.app/recipes?last_id=" + this.state.lastid + "&is_veg=" + this.state.isVeg + "";
-            }
-            else {
-                url = "https://foodzilla.vercel.app/recipes?last_id=" + this.state.lastid + "";
-            }
-
-            fetch(url)
-                .then(response => response.json())
-                .then(data => this.setState
-                    ({ recipe: data, show: true })
-                )
-        });
-    }
+    
 
     changelastidBackwards = (event) => {
         event.preventDefault();
@@ -160,6 +146,9 @@ class Recipes extends Component {
                 }
                 else if (this.state.selectedtaste !== "") {
                     url = "https://foodzilla.vercel.app/recipes?last_id=" + this.state.lastid + "&taste=" + this.state.selectedtaste + "";
+                }
+                else if(this.state.keyword !== ""){
+                    url = "https://foodzilla.vercel.app/recipes?last_id=" + this.state.lastid  + "&query=" + this.state.keyword;
                 }
                 else if (this.state.isVeg !== "" & this.state.selectedtaste !== "") {
                     url = "https://foodzilla.vercel.app/recipes?last_id=" + this.state.lastid + "&is_veg=" + this.state.isVeg + "&taste=" + this.state.selectedtaste + "";
@@ -186,7 +175,7 @@ class Recipes extends Component {
 
                 <div className="filterbtns">
                     <input type="text" placeholder="search recipe" onChange={this.setKeyword}></input>
-                    <button onClick={this.searchRecipe}>search</button>
+                    &nbsp;<button onClick={this.searchRecipe}>🔍</button>
                     <button className="btns" id="veg" onClick={this.vegFilter}>veg</button>
                     <button className="btns" id="nonveg" onClick={this.nonvegFilter}>nonveg</button>
 
@@ -197,12 +186,13 @@ class Recipes extends Component {
                     </select>
 
                 </div>
-                <div className="npbtns">
+                {this.state.r ?
+                    <div>
+                         <div className="npbtns">
                     <button type="submit" className="btns" onClick={this.changelastidBackwards} >Back</button>
                     <button onClick={this.changelastid} className="btns" >Next</button>
                 </div>
-                {this.state.recipe ?
-                    <div>
+
                         {this.state.show ?
 
                             <div className="cardholder">
@@ -227,18 +217,16 @@ class Recipes extends Component {
                                 )}
                             
                             </div>
-                            : <div>
-                                loading...
-                            </div>
-
+                            : <div> loading...</div>
                         }
-                    </div>             
-                    :<div><center></center> no data found</div>}
+                    
                      <div className="npbtns">
                     <button type="submit" className="btns" onClick={this.changelastidBackwards} >Back</button>
                     <button onClick={this.changelastid} className="btns" >Next</button>
                 </div>
-
+                </div>          
+                    :<h2>no related data found kindly refresh the page... </h2>
+                    }
             </div>
 
         );

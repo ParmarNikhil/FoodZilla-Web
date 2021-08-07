@@ -18,7 +18,7 @@
   color: black;
   float: left;
   height: 50px;
-  font-size: 16pt;
+  font-size: 20pt;
   text-align: center;
   padding: 10px;
 }
@@ -26,9 +26,11 @@
 .Topnav p{
 
   height: 50px;
-  font-size: 20pt;
+  font-size: 24pt;
   text-align: center;
   padding: 10px;
+  margin-right: 50%;
+  margin-left: 46%;
 }
 
 .Topnav a:hover{
@@ -46,6 +48,8 @@ img{
 
 .filterbtns{
   display: flex;
+  height: 35px;
+  width:auto;
   justify-content: center;
   padding: 5px 5px 5px 5px;
   margin: auto;
@@ -66,7 +70,7 @@ img{
 }
 
 .vegbtn{
-  background-color: green;
+  background-color:#007500;
   height: auto;
   width: auto;
   margin-left: 3px;
@@ -150,7 +154,7 @@ img{
 }
 
 .nonvegbtn{
-  background-color: red;
+  background-color: #750000;
   height: auto;
   width: auto;
   margin-left: 3px;
@@ -169,7 +173,7 @@ img{
   width: auto;
   height: auto;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 30px;
+  grid-gap: 50px;
   align-items: stretch;
 }
 
@@ -182,11 +186,33 @@ img{
   border-style: solid;
   text-align:left;
   height:250px;
+  width: 500px;
+  max-height: 100%;
+  max-width: 100%;
+  padding: 10px 10px 10px 10px;
+}
+
+.favcards{
+  text-decoration: none;
+  color:black;
+  justify-content: center;
+  font-size:30px;
+  border: whitesmoke;
+  border-style: solid;
+  text-align:left;
+  height:280px;
+  width: 500px;
   max-height: 100%;
   max-width: 100%;
   padding: 10px 10px 10px 10px;
 }
 .cards:hover{
+  box-shadow: 5px 5px 5px 0px grey;
+  border: grey;
+  border-width:thick;
+}
+
+.favcards:hover{
   box-shadow: 5px 5px 5px 0px grey;
   border: grey;
   border-width:thick;

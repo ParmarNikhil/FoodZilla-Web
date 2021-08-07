@@ -9,30 +9,47 @@ class Favourites extends Component {
             cart:[]
         }
         componentDidMount(){
-            this.setState({cart:JSON.parse(localStorage.getItem("fav"))},()=>{
-                console.log(this.state.cart)
-            })
+            this.setState({cart:JSON.parse(localStorage.getItem("fav"))})
         }
 
         removeFav = (r) => {
+            document.getElementById("undobtn").style.visibility="visible";
             const data = this.state.cart;
+            if(localStorage.getItem("tempForUndo")==null){
+                localStorage.setItem("tempForUndo","[]");
+            }
+            localStorage.setItem("tempForUndo",JSON.stringify(r));
             data.splice(this.state.cart.indexOf(r),1)
             this.setState({cart:data},()=>{
                 localStorage.setItem("fav",JSON.stringify(this.state.cart))
             });
-            
+        }
+
+        undoRemove = () => {
+            document.getElementById("undobtn").style.visibility="hidden";
+            if(localStorage.getItem("tempForUndo")!==null){
+                const removed = JSON.parse(localStorage.getItem("tempForUndo"));
+                const data = JSON.parse(localStorage.getItem("fav"));
+                data.push(removed);
+                this.setState({cart:data},()=>{
+                    localStorage.clear("tempForUndo");
+                    localStorage.setItem("fav",JSON.stringify(data));
+                })
+            }
         }
 
         render() {
        
-        return (
+        return ( 
             <div>
-            <center><h1>Favourites</h1></center>
+                <br></br>
+            <button className="btns" id="undobtn" style={{visibility:"hidden"}} onClick={this.undoRemove}>undo remove</button>
+
             {this.state.cart?
                 <div className="cardholder">
-                    {this.state.cart.map((r) =>
+                        {this.state.cart.map((r) =>
                                
-                        <div className="cards" key={r.id}>
+                        <div className="favcards" key={r.id}>
                         <Link to={`/RecipeDesc/${r.id}`}>
                             <img src={r.image} alt="something" />
                         </Link>
